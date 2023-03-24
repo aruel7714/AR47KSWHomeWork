@@ -49,9 +49,28 @@ int main()
 		}
 	}
 
+	
+
 	// 정수를 정수로 나오면 실수는 버리고 정수의 값만 나옵니다.
 	int PlayerY = ScreenYSize / 2;
 	int PlayerX = ScreenXSize / 2;
+
+	int blockCount = 5;
+	srand(time(0));
+	for (int i = 0; i < blockCount; i++)
+	{
+		int Xindex = rand() % 20;
+		int Yindex = rand() % 10;
+
+		if (Xindex == PlayerX && Yindex == PlayerY)
+		{
+			continue;
+		}
+		else
+		{
+			Arr[Yindex][Xindex] = 'x';
+		}
+	}
 
 	while (true)
 	{
@@ -95,8 +114,15 @@ int main()
 			}
 			else
 			{
-				PlayerX -= 1;
-				Arr[PlayerY][PlayerX + 1] = 'o';
+				if (Arr[PlayerY][PlayerX - 1] == 'x')
+				{
+					continue;
+				}
+				else
+				{
+					PlayerX -= 1;
+					Arr[PlayerY][PlayerX + 1] = 'o';
+				}
 			}
 			break;
 		case 'd':
@@ -108,8 +134,15 @@ int main()
 			}
 			else
 			{
-				PlayerX += 1;
-				Arr[PlayerY][PlayerX - 1] = 'o';
+				if (Arr[PlayerY][PlayerX + 1] == 'x')
+				{
+					continue;
+				}
+				else
+				{
+					PlayerX += 1;
+					Arr[PlayerY][PlayerX - 1] = 'o';
+				}
 			}
 			break;
 		case 'w':
@@ -121,8 +154,16 @@ int main()
 			}
 			else
 			{
-				PlayerY -= 1;
-				Arr[PlayerY + 1][PlayerX] = 'o';
+				if (Arr[PlayerY - 1][PlayerX] == 'x')
+				{
+					continue;
+				}
+				else
+				{
+					PlayerY -= 1;
+					Arr[PlayerY + 1][PlayerX] = 'o';
+				}
+				
 			}
 			break;
 		case 's':
@@ -134,8 +175,16 @@ int main()
 			}
 			else
 			{
-				PlayerY += 1;
-				Arr[PlayerY - 1][PlayerX] = 'o';
+				if (Arr[PlayerY + 1][PlayerX] == 'x')
+				{
+					continue;
+				}
+				else
+				{
+					PlayerY += 1;
+					Arr[PlayerY - 1][PlayerX] = 'o';
+				}
+				
 			}
 			break;
 		default:
