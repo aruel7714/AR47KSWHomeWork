@@ -34,6 +34,18 @@
 //     @
 //     @
 
+// 폭탄 터지는걸 어떻게 구현해야할까...?
+// 일정 시간이 지나면 가로 세로 전부다 @로 만드는대신
+// 텀을두고 순차적으로 터지게 해야한다.
+// 1. 일정 시간이 지나게
+// 2. 폭탄 놓여진 자리의 가로 세로 전부를 @로.
+// 3. @로 바뀌는것도 일정 시간마다 차례대로
+// 이 순서인데
+// 1번을 어떻게 구현해야 할까...?
+// 폭탄만 따로 시간이 흘러가게 구현할수있을까...?
+//
+
+
 int main()
 {
 	const int ScreenYSize = 10;
@@ -55,12 +67,15 @@ int main()
 	int PlayerY = ScreenYSize / 2;
 	int PlayerX = ScreenXSize / 2;
 
+	// 장애물 갯수
 	int blockCount = 5;
 	srand(time(0));
+
+	// 장애물 설치
 	for (int i = 0; i < blockCount; i++)
 	{
-		int Xindex = rand() % 20;
-		int Yindex = rand() % 10;
+		int Xindex = rand() % ScreenXSize;
+		int Yindex = rand() % ScreenYSize;
 
 		if (Xindex == PlayerX && Yindex == PlayerY)
 		{
@@ -72,11 +87,17 @@ int main()
 		}
 	}
 
+	int timeCount = 1;
+
 	while (true)
 	{
 		system("cls");
 
-		Arr[PlayerY][PlayerX] = '*';
+		//Arr[PlayerY][PlayerX] = '*';
+		// 플레이어 자리에 폭탄을 놓으면 폭탄이 보이게 한다.
+		if (Arr[PlayerY][PlayerX] != '@') {
+			Arr[PlayerY][PlayerX] = '*';
+		}
 
 		for (size_t y = 0; y < ScreenYSize; y++)
 		{
@@ -110,18 +131,33 @@ int main()
 			Arr[PlayerY][PlayerX + 1] = 'o';*/
 			if (PlayerX == 0)
 			{
+				// 화면 밖으로 통과 못함!
 				continue;
 			}
 			else
 			{
-				if (Arr[PlayerY][PlayerX - 1] == 'x')
+				if (Arr[PlayerY][PlayerX - 1] == 'x' || Arr[PlayerY][PlayerX - 1])
 				{
+					// 장애물이 있으면 못지나감!
+					// 폭탄도 마찬가지!
 					continue;
 				}
 				else
 				{
-					PlayerX -= 1;
-					Arr[PlayerY][PlayerX + 1] = 'o';
+					// 왼쪽으로 이동!
+					if (Arr[PlayerY][PlayerX] == '@')
+					{
+						// 플레이어 자리가 폭탄이라면 이동만
+						PlayerX -= 1;
+					}
+					else
+					{
+						// 플레이어 자리에 폭탄이 없다면
+						// 이동하면서 잔상 없애기
+						PlayerX -= 1;
+						Arr[PlayerY][PlayerX + 1] = 'o';
+					}
+					
 				}
 			}
 			break;
@@ -130,18 +166,33 @@ int main()
 			//PlayerX += 1;
 			if (PlayerX == ScreenXSize - 1)
 			{
+				// 화면 밖으로 통과 못함!
 				continue;
 			}
 			else
 			{
-				if (Arr[PlayerY][PlayerX + 1] == 'x')
+				if (Arr[PlayerY][PlayerX + 1] == 'x' || Arr[PlayerY][PlayerX + 1] == '@')
 				{
+					// 장애물이 있으면 못지나감!
+					// 폭탄도 마찬가지!
 					continue;
 				}
 				else
 				{
-					PlayerX += 1;
-					Arr[PlayerY][PlayerX - 1] = 'o';
+					// 오른쪽으로 이동!
+					if (Arr[PlayerY][PlayerX] == '@')
+					{
+						// 플레이어 자리가 폭탄이라면 이동만
+						PlayerX += 1;
+					}
+					else
+					{
+						// 플레이어 자리에 폭탄이 없다면
+						// 이동하면서 잔상 없애기
+						PlayerX += 1;
+						Arr[PlayerY][PlayerX - 1] = 'o';
+					}
+					
 				}
 			}
 			break;
@@ -150,18 +201,33 @@ int main()
 			//PlayerY -= 1;
 			if (PlayerY == 0)
 			{
+				// 화면 밖으로 통과 못함!
 				continue;
 			}
 			else
 			{
-				if (Arr[PlayerY - 1][PlayerX] == 'x')
+				if (Arr[PlayerY - 1][PlayerX] == 'x' || Arr[PlayerY - 1][PlayerX] == '@')
 				{
+					// 장애물이 있으면 못지나감!
+					// 폭탄도 마찬가지!
 					continue;
 				}
 				else
 				{
-					PlayerY -= 1;
-					Arr[PlayerY + 1][PlayerX] = 'o';
+					// 위쪽으로 이동!
+					if (Arr[PlayerY][PlayerX] == '@')
+					{
+						// 플레이어 자리가 폭탄이라면 이동만
+						PlayerY -= 1;
+					}
+					else
+					{
+						// 플레이어 자리에 폭탄이 없다면
+						// 이동하면서 잔상 없애기
+						PlayerY -= 1;
+						Arr[PlayerY + 1][PlayerX] = 'o';
+					}
+					
 				}
 				
 			}
@@ -171,28 +237,52 @@ int main()
 			//PlayerY += 1;
 			if (PlayerY == ScreenYSize - 1)
 			{
+				// 화면 밖으로 통과 못함!
 				continue;
 			}
 			else
 			{
-				if (Arr[PlayerY + 1][PlayerX] == 'x')
+				if (Arr[PlayerY + 1][PlayerX] == 'x' || Arr[PlayerY + 1][PlayerX] == '@')
 				{
+					// 장애물이 있으면 못지나감!
+					// 폭탄도 마찬가지!
 					continue;
 				}
 				else
 				{
-					PlayerY += 1;
-					Arr[PlayerY - 1][PlayerX] = 'o';
+					// 아래쪽으로 이동!
+					if (Arr[PlayerY][PlayerX] == '@')
+					{
+						// 플레이어 자리가 폭탄이라면 이동만
+						PlayerY += 1;
+					}
+					else 
+					{
+						// 플레이어 자리에 폭탄이 없다면
+						// 이동하면서 잔상 없애기
+						PlayerY += 1;
+						Arr[PlayerY - 1][PlayerX] = 'o';
+					}
+
 				}
 				
 			}
+			break;
+		case 'j':
+		case 'J':
+			// 폭탄 설치 키 : 'j'
+			Arr[PlayerY][PlayerX] = '@';
+
 			break;
 		default:
 			break;
 		}
 
 		Sleep(200);
+
 	}
+
+	
 
 
 }
