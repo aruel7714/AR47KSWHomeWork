@@ -75,6 +75,8 @@ public:
 	}
 
 	// 이녀석을 무조건 사용해서 플레이어가 바깥으로 못나가게 만드세요.
+	// 정답 : player에서 const로 사용하니 const를 붙여야 한다. IsScreenOver(const int2& _pos) const
+	// 아무것도 바꿔주는게 없으니 의도를 알려줘야 하기 때문에
 	bool IsScreenOver(const int2& _Pos)
 	{
 		
@@ -138,6 +140,8 @@ public:
 	}
 
 	// 화면바깥으로 못나가게 하세요. 
+	// 정답 : ConsoleGameScreen으로 넣으면 용량이 커지니 ConsoleGameScreen&으로 넣을것
+	// const를 사용해서 const ConsoleGameScreen& 로 의도를 명확하게 하기
 	void Input(ConsoleGameScreen _Console)
 	{
 		if (0 == _kbhit())
@@ -155,6 +159,14 @@ public:
 		{
 		case 'a':
 		case 'A':
+			/*
+			int2 NextPos = Pos;
+			NextPos.X -=1;
+			if(false == _Console,IsScreenOver(NextPos)
+			{
+				Pos.X -= 1;
+			}
+			*/
 			Pos.X -= 1;
 			if (_Console.IsScreenOver(Pos))
 			{
