@@ -19,7 +19,8 @@ public:
 	{
 		return BulletPos;
 	}
+
+	void UpMove();
 	
-	void BulletFire(bool _Fire);
 };
 

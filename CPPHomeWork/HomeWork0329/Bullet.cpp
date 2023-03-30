@@ -1,19 +1,14 @@
 #include "Bullet.h"
 #include "ConsoleGameScreen.h"
+#include <conio.h>
+#include <Windows.h>
 
 Bullet::Bullet()
 {
 	
 }
 
-void Bullet::BulletFire(bool _Fire)
+void Bullet::UpMove()
 {
-	int2 BulletNextPos = { 0, 0 };
-	if (true == _Fire)
-	{
-		BulletPos.Y -= 1;
-		BulletNextPos = BulletPos;
-		ConsoleGameScreen::GetMainScreen().SetScreenCharacter(BulletPos, '+');
-
-	}
+	--BulletPos.Y;
 }

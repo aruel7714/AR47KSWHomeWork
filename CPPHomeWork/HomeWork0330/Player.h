@@ -19,26 +19,24 @@ public:
 
 	void Input();
 
-	// 이상적인 방법은 보통 이걸 추천한다.
-	// 
-	inline bool IsFire()
+	void Render();
+
+	// 전방선언은 이렇게 해도 된다.
+	void SetBulletArr(class Bullet* _BulletPtr)
 	{
-		return Fire;
+		BulletPtr = _BulletPtr;
 	}
-
-	//void Test(Bullet Test) 
-	//{
-
-	//}
 
 protected:
 
 private:
 	static const int InterFrame = 200;
 
-	bool Fire = false;
-
 	int2 Pos = int2(0, 0);
+
+	Bullet* BulletPtr;
+
+	int BulletCount = 0;
 
 	// 이런 구조를 Has a라고 한다. Player Has a Bullet
 	// Bullet NewBullet; // 플레이어의 신체 내부에 총알 한발이 있다.

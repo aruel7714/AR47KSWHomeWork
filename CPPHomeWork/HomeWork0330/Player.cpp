@@ -2,6 +2,7 @@
 #include "ConsoleGameScreen.h"
 #include <conio.h>
 #include <Windows.h>
+#include "Bullet.h"
 
 Player::Player()
 {
@@ -61,14 +62,33 @@ void Player::Input()
 			Pos.Y += 1;
 		}
 		break;
-	case 'j':
-	case 'J':
-		Fire = true;
+	case 'f':
+	case 'F':
+		// 하나의 변수를 만들어서 0으로 초기화를 하고
+		// f를 누를때마다 그 변수를 증가시켜주고
+		// 일정 값을 누르면 다시 0으로 초기화를 시켜주면?
+		
+		if (BulletCount >= BulletPtr->ArrBulletCount)
+		{
+			BulletCount = 0;
+		}
+
+		BulletPtr[BulletCount].SetPos(Pos);
+		BulletPtr[BulletCount].FireOn();
+		BulletCount++;
+		
+		/*BulletPtr[0].SetPos(Pos);
+		BulletPtr[0].FireOn();*/
 		break;
 	default:
 		break;
 	}
 
-
 	Sleep(InterFrame);
+}
+
+
+void Player::Render()
+{
+	ConsoleGameScreen::GetMainScreen().SetScreenCharacter(Pos, '*');
 }

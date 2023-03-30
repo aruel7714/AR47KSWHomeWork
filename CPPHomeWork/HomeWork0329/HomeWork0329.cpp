@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Player.h"
+#include "Bullet.h"
 #include "ConsoleGameScreen.h"
 
 int main()
@@ -16,6 +17,7 @@ int main()
 	// Bullet NewBullet;
 
 	Player NewPlayer = Player();
+	Bullet NewBullet = Bullet();
 	int2 ScreenSize = ConsoleGameScreen::GetMainScreen().GetScreenSize();
 	NewPlayer.SetPos(ScreenSize.Half());
 
@@ -26,10 +28,19 @@ int main()
 		ConsoleGameScreen::GetMainScreen().ScreenClear();
 
 		ConsoleGameScreen::GetMainScreen().SetScreenCharacter(NewPlayer.GetPos(), '*');
+		if (true == NewPlayer.IsFire())
+		{
+			ConsoleGameScreen::GetMainScreen().SetScreenCharacter(NewBullet.GetBulletPos(), '+');
+			NewBullet.UpMove();
+		}
 
 		ConsoleGameScreen::GetMainScreen().ScreenPrint();
 
 		NewPlayer.Input();
+		if (false == NewPlayer.IsFire())
+		{
+			NewBullet.SetBulletPos(NewPlayer.GetPos());
+		}
 
 	}
 
