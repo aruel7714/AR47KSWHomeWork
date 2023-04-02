@@ -81,6 +81,7 @@ void ShootingGame::MonsterEndCheck()
 	// 4. 내려도 본다.
 	int i = 0;
 	int2 CheckMonsterPos = { 0, 0 };
+	
 	int2 MonsterPos = { 0, 0 };
 
 	// 이동하는 반복문
@@ -110,8 +111,6 @@ void ShootingGame::MonsterEndCheck()
 	//	ArrMonster->PlusMinusDir();
 	//}
 
-	
-
 	//// 몬스터의 오른쪽부터 검사하여
 	//// 죽지않은 몬스터의 Pos값 받기
 	//for (int i = ArrMonsterCount - 1; i >= 0; i--)
@@ -123,11 +122,13 @@ void ShootingGame::MonsterEndCheck()
 	//	}
 	//}
 
-	// Dir이 양수라면 왼쪽으로 이동
+	// Dir이 양수라면 왼쪽으로 이동하게 설정
 	if (0 < ArrMonster->GetDir())
 	{
+		// 몬스터의 왼쪽부터 검사하여
 		for (int i = 0; i < ArrMonsterCount; i++)
 		{
+			// 죽지않은 몬스터의 Pos값 받기
 			if (true == ArrMonster[i].IsUpdate())
 			{
 				CheckMonsterPos = ArrMonster[i].GetPos();
@@ -135,17 +136,20 @@ void ShootingGame::MonsterEndCheck()
 			}
 		}
 
+		// 벽에 닿으면 Dir 부호 바꾸기
 		if (CheckMonsterPos.X == 0)
 		{
 			ArrMonster->PlusMinusDir();
 		}
 		
 	}
-	// Dir이 음수라면 오른쪽으로 이동
-	if (0 > ArrMonster->GetDir())
+	// Dir이 음수라면 오른쪽으로 이동하게 설정
+	else if (0 > ArrMonster->GetDir())
 	{
+		// 몬스터의 오른쪽부터 검사하여
 		for (int i = ArrMonsterCount - 1; i >= 0; i--)
 		{
+			// 죽지않은 몬스터의 pos값 받기
 			if (true == ArrMonster[i].IsUpdate())
 			{
 				CheckMonsterPos = ArrMonster[i].GetPos();
@@ -158,13 +162,8 @@ void ShootingGame::MonsterEndCheck()
 			ArrMonster->PlusMinusDir();
 		}
 	}
-	for (int i = 0; i < ArrMonsterCount; i++)
-	{
-		MonsterPos = ArrMonster[i].GetPos();
-		MonsterPos.X -= ArrMonster->GetDir();
-		ArrMonster[i].SetPos(MonsterPos);
-	}
 
+	// 끝에 다다르면 y내리기
 	/*if (CheckMonsterPos.X == 0 || CheckMonsterPos.X == ConsoleGameScreen::GetMainScreen().ScreenXSize - 1)
 	{
 		for (int i = 0; i < ArrMonsterCount; i++)
@@ -175,20 +174,26 @@ void ShootingGame::MonsterEndCheck()
 		}
 	}*/
 
-	
-	/*while (true)
+	// 이동!
+	for (int i = 0; i < ArrMonsterCount; i++)
 	{
-		if (i == ArrMonsterCount)
+		MonsterPos = ArrMonster[i].GetPos();
+		// 벽에 닿은 상태라면 y 이동
+		if (CheckMonsterPos.X == 0 || CheckMonsterPos.X == ConsoleGameScreen::GetMainScreen().ScreenXSize - 1)
 		{
-			i = 0;
+			MonsterPos.Y += 1;
+			ArrMonster[i].SetPos(MonsterPos);
+			
 		}
-		int2 MonsterPos = ArrMonster[i].GetPos();
-		MonsterPos.X -= 1;
-		ArrMonster[i].SetPos(MonsterPos);
+		// 그게 아니라면 x 이동
+		else
+		{
+			MonsterPos.X -= ArrMonster->GetDir();
+			ArrMonster[i].SetPos(MonsterPos);
+		}
+		
+	}
 
-	}*/
-	
-	
 }
 
 void ShootingGame::GameUpdate() 
