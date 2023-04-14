@@ -150,14 +150,21 @@ public:
 
     void push_front(const DataType& _Data)
     {
+        // 새로운 리스트 노드를 만들고
         ListNode* NewListNode = new ListNode();
         NewListNode->Value = _Data;
 
+        // 맨 처음껄 옮겨야되니까
         ListNode* NextNode = StartNode->Next;
 
+        // 맨처음의 이전 주소를 가리키는걸 새로운 리스트 노드로 바꾸고
         NextNode->Prev = NewListNode;
+        // 스타트노드의 다음 주소를 가리키는걸 새로운 리스트 노드로 바꾼다.
         StartNode->Next = NewListNode;
+
+        // 새로운 리스트 노드의 다음 주소를 가리키는걸 원래 맨처음의 노드로 바꾸고
         NewListNode->Next = NextNode;
+        // 새로운 리스트 노드의 이전 주소를 가리키는걸 스타트 노드로 바꾼다.
         NewListNode->Prev = StartNode;
     }
 
