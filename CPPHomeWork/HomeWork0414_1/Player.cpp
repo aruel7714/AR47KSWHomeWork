@@ -144,17 +144,18 @@ void Player::Update()
 	if (true == IsItem(NextPos))
 	{
 		++BombPower;
+		ConsoleObjectManager::CreateConsoleObject<Item>(ObjectOrder::Item);
 	}
 }
 
-void Player::BombPowerUp()
-{
-	BombPower++;
-}
-
-void Player::PickUpItem(int2 _NextPos)
-{
-	
-	
-	
-}
+//void Player::BombPowerUp()
+//{
+//	BombPower++;
+//}
+//
+//void Player::PickUpItem(int2 _NextPos)
+//{
+//	
+//	
+//	
+//}

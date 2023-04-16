@@ -16,9 +16,9 @@ public:
 
 	bool IsItem(int2 _NextPos);
 
-	void BombPowerUp();
+	//void BombPowerUp();
 
-	void PickUpItem(int2 _NextPos);
+	//void PickUpItem(int2 _NextPos);
 
 protected:
 

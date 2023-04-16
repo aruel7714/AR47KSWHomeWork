@@ -2,6 +2,7 @@
 
 Parts::Parts() 
 {
+	RenderChar = 'o';
 }
 
 Parts::~Parts() 

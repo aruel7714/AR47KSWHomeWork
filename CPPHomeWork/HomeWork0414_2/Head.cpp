@@ -1,6 +1,7 @@
 #include "Head.h"
 #include <conio.h>
 #include <GameEngineConsole/ConsoleGameScreen.h>
+#include <GameEngineConsole/ConsoleObjectManager.h>
 
 bool Head::IsPlay = true;
 
@@ -16,7 +17,26 @@ Head::~Head()
 
 void Head::IsBodyCheck()
 {
+	std::list<ConsoleGameObject*>& BodyGroup
+		= ConsoleObjectManager::GetGroup(1);
 
+	for (ConsoleGameObject* Ptr : BodyGroup)
+	{
+		// 터질때가 있습니다.
+		if (nullptr == Ptr)
+		{
+			continue;
+		}
+
+		int2 BodyPos = Ptr->GetPos();
+		if (true)
+		{
+			Ptr->Death();
+			return;
+		}
+	}
+
+	return;
 }
 
 void Head::NewBodyCreateCheck()
@@ -35,8 +55,9 @@ void Head::Update()
 
 	if (0 == _kbhit())
 	{
+		// 가만히 있어도 플레이어는 움직인다.
 		// SetPos(GetPos() + Dir);
-		// IsBodyCheck();
+		// IsBodyCheck(); 
 		// NewBodyCreateCheck();
 		return;
 	}

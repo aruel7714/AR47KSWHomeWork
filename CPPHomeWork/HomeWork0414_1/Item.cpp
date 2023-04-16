@@ -29,33 +29,4 @@ void Item::Update()
 {
 	ConsoleGameObject::Update();
 
-	int2 ItemPos = GetPos();
-	
-	if (false)
-	{
-		Death();
-	}
-
 }
-
-//void Item::Update() 
-//{
-//	ConsoleGameObject::Update();
-//	
-//	if (&Player::GetPos == &Item::GetPos)
-//	{
-//		this->Death();
-//		&Player::BombPowerUp;
-//	}
-//
-//	//if (CurExpPower == MaxExpPower)
-//	//{
-//	//	Death();
-//	//	// Off();
-//	//}
-//
-//	//if (0 >= --BoomCount)
-//	//{
-//	//	CurExpPower++;
-//	//}
-//}
