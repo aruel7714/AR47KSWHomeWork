@@ -20,7 +20,7 @@ protected:
 
 private:
 	// 노드 구조
-	Parts* Next;
-	Parts* Prev;
+	Parts* Next = nullptr;
+	Parts* Prev = nullptr;
 };
 

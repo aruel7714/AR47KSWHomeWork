@@ -19,8 +19,8 @@ public:
 
 protected:
 	void Update() override;
-	void IsBodyCheck();
-	void NewBodyCreateCheck();
+	bool IsBodyCheck(int2 _NextPos);
+	void NewBodyCreateCheck(int2 _PrevPos);
 
 private:
 	int2 Dir = int2::Up;

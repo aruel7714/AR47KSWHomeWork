@@ -2,6 +2,8 @@
 #include <conio.h>
 #include <GameEngineConsole/ConsoleGameScreen.h>
 #include <GameEngineConsole/ConsoleObjectManager.h>
+#include "Body.h"
+#include "Parts.h"
 
 bool Head::IsPlay = true;
 
@@ -15,7 +17,7 @@ Head::~Head()
 {
 }
 
-void Head::IsBodyCheck()
+bool Head::IsBodyCheck(int2 _NextPos)
 {
 	std::list<ConsoleGameObject*>& BodyGroup
 		= ConsoleObjectManager::GetGroup(1);
@@ -29,19 +31,20 @@ void Head::IsBodyCheck()
 		}
 
 		int2 BodyPos = Ptr->GetPos();
-		if (true)
+		if (_NextPos == BodyPos)
 		{
 			Ptr->Death();
-			return;
+			return true;
 		}
 	}
 
-	return;
+	return false;
 }
 
-void Head::NewBodyCreateCheck()
+void Head::NewBodyCreateCheck(int2 _PrevPos)
 {
-
+	std::list<ConsoleGameObject*>& PartsGroup
+		= ConsoleObjectManager::GetGroup(2);
 }
 
 // 화면바깥으로 못나가게 하세요. 
@@ -65,6 +68,7 @@ void Head::Update()
 	char Ch = _getch();
 
 	int2 NextPos = { 0, 0 };
+	int2 PrevPos = { 0, 0 };
 
 	switch (Ch)
 	{
@@ -93,8 +97,16 @@ void Head::Update()
 	}
 
 	SetPos(GetPos() + Dir);
-	IsBodyCheck();
-	NewBodyCreateCheck();
+	PrevPos.X = GetPos().X - Dir.X;
+	PrevPos.Y = GetPos().Y - Dir.Y;
+	if (true == IsBodyCheck(GetPos()))
+	{
+		ConsoleObjectManager::CreateConsoleObject<Parts>(2);
+		NewBodyCreateCheck(PrevPos);
+		ConsoleObjectManager::CreateConsoleObject<Body>(1);
+	}
+//	IsBodyCheck();
+//	NewBodyCreateCheck();
 
 	if (true == ConsoleGameScreen::GetMainScreen().IsScreenOver(GetPos()))
 	{

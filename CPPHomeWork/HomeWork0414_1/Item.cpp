@@ -1,7 +1,6 @@
 #include "Item.h"
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngineConsole/ConsoleGameScreen.h>
-#include "player.h"
 
 Item::Item() 
 {
