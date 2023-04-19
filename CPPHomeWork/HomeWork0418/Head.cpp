@@ -102,22 +102,22 @@ void Head::Update()
 	case 'a':
 	case 'A':
 		Dir = int2::Left;
-		//RenderChar = L'¢¸';
+		RenderChar = L'¢¸';
 		break;
 	case 'd':
 	case 'D':
 		Dir = int2::Right;
-		//RenderChar = L'¢º';
+		RenderChar = L'¢º';
 		break;
 	case 'w':
 	case 'W':
 		Dir = int2::Up;
-		//RenderChar = L'¡ã';
+		RenderChar = L'¡ã';
 		break;
 	case 's':
 	case 'S':
 		Dir = int2::Down;
-		//RenderChar = L'¡å';
+		RenderChar = L'¡å';
 		break;
 	case 'q':
 	case 'Q':
@@ -132,7 +132,7 @@ void Head::Update()
 	
 	
 	SetPos(GetPos() + Dir);
-	SetRender();
+	// SetRender();
 	
 	IsBodyCheck();
 
